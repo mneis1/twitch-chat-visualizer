@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="http://d3js.org/d3.v4.min.js"></script>
+</head>
+<body>
+    <svg width="50" height="50">
+        <rect x="0" y="0" width="50" height="50" fill="green" />
+      </svg>
+<script>
+    // Put javascript/d3 code here my guys
+   //Make an SVG Container
+ var svgContainer = d3.select("body").append("svg")
+                                     .attr("width", 200)
+                                     .attr("height", 200);
+ 
+ //Draw the Rectangle
+ var rectangle = svgContainer.append("rect")
+                             .attr("x", 10)
+                             .attr("y", 10)
+                             .attr("width", 50)
+                             .attr("height", 100);
+</script>
+</script>
+</body>
+</html>
