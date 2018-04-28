@@ -23,7 +23,7 @@ app.get('/', function(req, res) {
 });
 
 app.get('/dataVis', function(req, res){
-    res.status(200).sendFile(__dirname + "/project2.html");
+    res.status(200).sendFile(__dirname + "/index.html");
 })
 
 var port = process.env.PORT || 8080;
