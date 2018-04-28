@@ -3,39 +3,34 @@ from nltk.collocations import *
 import requests
 
 
-def popular_text():
-    words = None
-
-    occurances_threshold = None
-    highest_ngram_pmi_lim = None
-
-
+class popText:
     def __init__(self):
+        #self.words = None
+
+        self.occurances_threshold = None
+        self.highest_ngram_pmi_lim = None
+
+    def get_data(self):
         pass
 
-    def get_data():
+    def push_data(self):
         pass
 
-    def push_data():
-        pass
-
-    def collate_data(json_data):
+    def collate_data(self, words):
         bigram_measures = nltk.collocations.BigramAssocMeasures()
         trigram_measures = nltk.collocations.TrigramAssocMeasures()
 
         # makes a list of words from a json of words
-        words = json_to_words(json_data)
+        #words = json_to_words(json_data)
 
         finder = BigramCollocationFinder.from_words(words)
-        finder.apply_freq_filter(occurances_threshold)
+        finder.apply_freq_filter(self.occurances_threshold)
 
-        finder.nbest(bigram_measures.pmi, highest_ngram_pmi_lim)
+        finder.nbest(bigram_measures.pmi, self.highest_ngram_pmi_lim)
 
         # TODO: may need code here that calls push_data
 
-    def json_to_words(some_json):
+    def json_to_words(self, some_json):
         # TODO: makes sure to make the entries case neutral
 
         pass
-
-
