@@ -34,13 +34,16 @@ class popText:
             #tokenizer.tokenize(message)
             self.tempColloList.extend(message)
 
+        stop = set(stopwords.words('english'))
+        self.tempColloList = [w for w in self.tempColloList if not w in stop]
+
         #TODO:incorperate stop word trimming
         #TODO: turn words to topic (dogs to dog)
 
         finder = BigramCollocationFinder.from_words(self.tempColloList)
         finder.apply_freq_filter(self.occurances_threshold)
 
-        b=finder.nbest(bigram_measures.pmi, self.highest_ngram_pmi_lim)
+        finder.nbest(bigram_measures.pmi, self.highest_ngram_pmi_lim)
 
         #TODO: glue value pairs together by space
         #TODO: get PMI and occurance for each value
@@ -48,8 +51,8 @@ class popText:
 
         for k, v in finder.ngram_fd.items():
             tempDict = {}
-            tempDict["topic"] = " ".join(k)
-            tempDict["occurance"] = v
+            tempDict["name"] = " ".join(k)
+            tempDict["size"] = v
             tempDictList.append(tempDict.copy())
 
         return json.dumps(tempDictList)
@@ -62,10 +65,10 @@ class popText:
         pass
 
 
-#x = popText()
-#a = [{'username': 'spiderinqz', 'message': u'F', 'channel': '#overwatchleague'}, {'username': 'the_mathcat', 'message': u'100', 'channel': '#overwatchleague'}, {'username': 'pepsidude555', 'message': u'100', 'channel': '#overwatchleague'}, {'username': 'lavow', 'message': u'SPAM SMOrc THIS SMOrc BOSS SMOrc TO SMOrc MOURN SMOrc SHANGHAI\u2019S SMOrc loss', 'channel': '#overwatchleague'}, {'username': 'phaaedra', 'message': u'100', 'channel': '#overwatchleague'}, {'username': 'acalacaboo', 'message': u'F', 'channel': '#overwatchleague'}, {'username': 'danzilla132', 'message': u'100', 'channel': '#overwatchleague'}, {'username': 'irrelavantstreams', 'message': u'Hey i got 100 tokens', 'channel': '#overwatchleague'}, {'username': 'bazzlover69', 'message': u'LOL', 'channel': '#overwatchleague'}]
-#c=x.collate_data(a)
-#print(c)
+x = popText()
+a = [{'username': 'spiderinqz', 'message': u'F', 'channel': '#overwatchleague'}, {'username': 'the_mathcat', 'message': u'100', 'channel': '#overwatchleague'}, {'username': 'pepsidude555', 'message': u'100', 'channel': '#overwatchleague'}, {'username': 'lavow', 'message': u'SPAM SMOrc the THIS SMOrc is BOSS SMOrc TO SMOrc MOURN SMOrc SHANGHAI\u2019S SMOrc loss', 'channel': '#overwatchleague'}, {'username': 'phaaedra', 'message': u'100', 'channel': '#overwatchleague'}, {'username': 'acalacaboo', 'message': u'F', 'channel': '#overwatchleague'}, {'username': 'danzilla132', 'message': u'100', 'channel': '#overwatchleague'}, {'username': 'irrelavantstreams', 'message': u'Hey i got 100 tokens', 'channel': '#overwatchleague'}, {'username': 'bazzlover69', 'message': u'LOL', 'channel': '#overwatchleague'}]
+c=x.collate_data(a)
+print(c)
 
 
 #Reads data from a twitch server. Requires a username and oauth key.
