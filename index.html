@@ -1,152 +1,199 @@
 <!DOCTYPE html>
 <html>
-    <style>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<style>
+    text {
+        font: 20px "Helvetica Neue", Helvetica, Arial, sans-serif;
+        text-anchor: middle;
+        pointer-events: none;
+    }
 
-        text {
-            font: 20px "Helvetica Neue", Helvetica, Arial, sans-serif;
-            text-anchor: middle;
-            pointer-events: none;
-        }
+    html,
+    body {
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        background: rgb(239, 238, 241);
+    }
 
-        html, body { height: 100%; padding: 0; margin: 0; }
-        div { width: 50%; height: 100%; float: left; background: rgb(0, 0, 0);}
-        div2 { background: rgb(0, 0, 0);}
-    </style>
-    
+    div {
+        width: 50%;
+        height: 100%;
+        float: left;
+        background: rgb(0, 0, 0);
+        border-right: solid black 3px;
+    }
+
+    div1 {
+        width: 50%;
+        height: 100%;
+        float: left;
+        background: rgb(0, 0, 0);
+        border-right: solid black 3px;
+    }
+
+    div2 {
+        background: rgb(0, 0, 0);
+    }
+</style>
+
 <body>
 
-        <div class="row">
-            <div1 class="column">
-                <iframe src="https://player.twitch.tv/?channel=overwatchleague" frameborder="0" allowfullscreen="true" scrolling="no" height= "540" width="960"></iframe>
-                <iframe src="https://www.twitch.tv/embed/overwatchleague/chat" frameborder="0" scrolling="no" height="533" width="960"></iframe>
-            </div>
+    <div class="row">
+        <div1 class="column">
+            <iframe src="https://player.twitch.tv/?channel=nickmercs" frameborder="0" allowfullscreen="true" scrolling="no" height="540" width="960"></iframe>
+            <iframe src="https://www.twitch.tv/embed/nickmercs/chat" frameborder="0" scrolling="no" height="533" width="960"></iframe>
+    </div>
 
-            <div2 class="column">
-                    
-            </div>
+    <div2 class="column">
+
+        </div>
         </div>
 
-                    
+
         <!-- <div class="graph"></div> -->
 
         <script src="http://d3js.org/d3.v3.min.js"></script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
-        
-    </body>
+
+</body>
+
+<script>
+    var num = 1000;
+     var data1 = {"name": "flare", "children": [{"name": "placeholder", "children": [{"name": "namePlaceholder", "size": -99999}]}]};
+
+
+    var diameter = 948,
+        format = d3.format(",d"),
+        color = d3.scale.category20c();
+
+    var bubble = d3.layout.pack()
     
-    <script>
-        
-        var num = 1000;
-        var data1json = '{ "name": "flare", "children": [ { "name": "rcccccccccc", "children": [ { "name": "rrrrrrrrrrrrrrrR", "size": ' + num + ' } ] }, { "name": "crcccccccccc", "children": [ { "name": "crrrrrrrrrrrrrrrR", "size": 4116 } ] }, { "name": "c", "children": [ { "name": "rrrrrrrrrrrrrrrRc", "children": [ { "name": "CC", "size": 6703 } ] } ] }, { "name": "rccccccccccz", "children": [ { "name": "zrrrrrrrrrrrrrrrR", "size": 6703 } ] } ] }';
-        
-        var data1 = JSON.parse(data1json);
-        
-        var data2json = '{ "name": "flare2", "children": [ { "name": "test", "children": [ { "name": "11111111", "size": 2000 } ] }, { "name": "test1", "children": [ { "name": "test2", "size": 5116 } ] }, { "name": "test3", "children": [ { "name": "zzzzzzzzzzz", "children": [ { "name": "test4", "size": 4703 } ] } ] }, { "name": "test5", "children": [ { "name": "test6", "size": 6703 } ] } ] }';
-        
-        var data2 = JSON.parse(data2json);
-        console.log(data2)
-        
-        
-        
-        var diameter = 950,
-            format = d3.format(",d"),
-            color = d3.scale.category20c();
-        
-        var bubble = d3.layout.pack( )
-            .sort(null)
-            .size([diameter, diameter])
-            .padding(2); // NOTE: padding between bubbles
-        
-        var svg = d3.select("body").append("svg")
-            .attr("width", diameter)
-            .attr("height", diameter)
-            .attr("class", "bubble");
-        
-            
-            update(data1);
-            
-        //     console.log(data1);
-        // d3.json("json.json", function(error, root) {
-        //   if (error) throw error;
-        //   
-        //   update(root);
-        // 
-        // });
-        
-        
-        
-        // Returns a flattened hierarchy containing all leaf nodes under the root.
-        function classes(root) {
-          var classes = [];
-          
-          
-        
-          function recurse(name, node) {
-            if (node.children) node.children.forEach(function(child) { recurse(node.name, child); });
-            else classes.push({packageName: name, className: node.name, value: node.size});
-          }
-        
-          recurse(null, root);
-          return {children: classes};
-        }
-        
-        d3.select(self.frameElement).style("height", diameter + "px");
-        
-        
-        
-        function update (data){
-          svg.selectAll(".node").remove();
-          var node = svg.selectAll(".node")
-              .data(bubble.nodes(classes(data))
-              .filter(function(d) { return !d.children; }))
-              .enter().append("g")
-              .attr("class", "node")
-              .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
-        
-          
-          node.append("title")
-              .text(function(d) { return d.className + ": " + format(d.value); });
-        
-          node.append("circle")
-              .attr("r", function(d) { return d.r; })
-              .style("fill", function(d) { return color(d.packageName); })
-              .on("click", function(d) {
-                });
-              
-        
-          node.append("text")
-              .attr("dy", ".5em")
-              .style("text-anchor", "middle")
-              //.text(function(d) { return d.className.substring(0, d.r / 3); });
-              .text(function(d) { return d.className.substring(0, d.r / 3); });
-        
-        
-        }
-        
-        setInterval(doTheThing, 150);
-        
-        function doTheThing() {
-            changeValues2();
-            update(data1);
-        }
-        function changeValues() {
-            dataTemp = data1;
-            data1 = data2;
-            data2 = dataTemp;
-        }
-        
-        function changeValues2() {
-            num += 50;
-            data1json = '{ "name": "flare", "children": [ { "name": "rcccccccccc", "children": [ { "name": "rrrrrrrrrrrrrrrR", "size": ' + num + ' } ] }, { "name": "crcccccccccc", "children": [ { "name": "crrrrrrrrrrrrrrrR", "size": 4116 } ] }, { "name": "c", "children": [ { "name": "rrrrrrrrrrrrrrrRc", "children": [ { "name": "CC", "size": 6703 } ] } ] }, { "name": "rccccccccccz", "children": [ { "name": "zrrrrrrrrrrrrrrrR", "size": 6703 } ] } ] }';
-            data1 = JSON.parse(data1json);
-        }
-    </script>
+        .sort(null)
+        .size([diameter, diameter])
+        .padding(2); // NOTE: padding between bubbles
 
-         
+    var svg = d3.select("body").append("svg")
+        .attr("width", diameter)
+        .attr("height", diameter)
+        .attr("class", "bubble");
+
+
+    update(data1);
+
+    //     console.log(data1);
+    // d3.json("json.json", function(error, root) {
+    //   if (error) throw error;
+    //   
+    //   update(root);
+    // 
+    // });
+
+
+
+    // Returns a flattened hierarchy containing all leaf nodes under the root.
+    function classes(root) {
+        var classes = [];
+
+        function recurse(name, node) {
+            if (node.children) node.children.forEach(function(child) {
+                recurse(node.name, child);
+            });
+            else classes.push({
+                packageName: name,
+                className: node.name,
+                value: node.size
+            });
+        }
+
+        recurse(null, root);
+        return {
+            children: classes
+        };
+    }
+
+    d3.select(self.frameElement).style("height", diameter + "px");
+
+    function update(data) {
+        svg.selectAll(".node").remove();
+        var node = svg.selectAll(".node")
+            .data(bubble.nodes(classes(data))
+            .filter(function(d) {
+                return !d.children;
+            }))
+            .enter().append("g")
+            .attr("class", "node")
+            .attr("transform", function(d) {
+                return "translate(" + d.x + "," + d.y + ")";
+            });
+
+
+        node.append("title")
+            .text(function(d) {
+                return d.className + ": " + format(d.value);
+            });
+        node.append("circle")
+            .attr("r", function(d) {
+                return d.r;
+            })
+            .style("fill", function(d) {
+                console.log(d.size);
+                return color(d.packageName);
+            })
+            .on("click", function(d) {});
+        node.append("text")
+            .attr("dy", ".5em")
+            .style("text-anchor", "middle")
+            .style("font-size", function(d) {
+                     if(d.className.length > 8) {
+                        return((d.r) / 5 + "px")
+                     }
+                 return((d.r) / 2 + "px")
+            })
+            .text(function(d) {
+
+                for(var i = 0; i < d.className.length; i++) {
+                    if(d.className.substring(i, i+1) == " ") {
+                        return(d.className.substring(0, i) + "\n" + d.className.substring(i+1, d.className.length));
+                    }
+                }
+
+                return d.className.substring(0, d.r / 3);
+            });
+
+
+    }
+
+    function handleData(data) {
+        var jsonTemplate = {"name": "flare", "children": []};
+
+        for(var i = 0; i < data.length; i++) {
+            var circleTemplate = {"name": "placeholder", "children": [{"name": "namePlaceholder", "size": -99999}]};
+            circleTemplate.name = data[i].name;
+            circleTemplate.children[0].name = data[i].name;
+            circleTemplate.children[0].size = data[i].size;
+            jsonTemplate.children.push(circleTemplate);
+        }
+
+
+       data1 = jsonTemplate;
+       update(data1);
+        //do some stuff
+    }
+
+
+
+    setInterval(tick, 50);
+
+    function tick() {
+        $.ajax({
+            url: "http://ec2-52-91-71-192.compute-1.amazonaws.com:8080/receive",
+            type: 'GET',
+            success: handleData
+        });
+    }
+</script>
+
+
 </html>
-
-
-
-
-
