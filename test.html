@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+
+            
+            </style>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <div class="graph"></div>
+
+        <script src="http://d3js.org/d3.v3.min.js"></script>
+        <script>
+            var diameter = 600;
+
+var svg = d3.select('#chart').append('svg')
+  .attr('width', diameter)
+  .attr('height', diameter);
+
+var bubble = d3.layout.pack()
+  .size([diameter, diameter])
+  .padding(3) // padding between adjacent circles
+  .value(function(d) {return d.size;}) // new data will be loaded to bubble layout
+        </script>
+    </body>
+</html>
