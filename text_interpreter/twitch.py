@@ -82,7 +82,7 @@ import json
 import numpy as np
 import urllib2
 import popular_text
-
+import urllib
 
 
 if __name__ == "__main__":
@@ -118,10 +118,20 @@ if __name__ == "__main__":
                 print(fJson)
                 print("\n\n\n")
                 
-                req = urllib2.Request('http://ec2-52-91-71-192.compute-1.amazonaws.com:8080/send')
-                req.add_header('Content-Type', 'application/json')
-                response = urllib2.urlopen(req, json.dumps(received))
+
+                req = urllib2.Request('http://ec2-52-91-71-192.compute-1.amazonaws.com:8080/send', fJson, {'Content-Type': 'application/json'})
+                #data2 = urllib.urlencode(fJson)
+                #req = urllib2.Request('http://ec2-52-91-71-192.compute-1.amazonaws.com:8080/send', data=data2)
                 
+                #resp = urllib2.urlopen(req)
+                #req.add_header('Content-Type', 'application/json')
+                
+                
+
+
+                f = urllib2.urlopen(req)
+                response = f.read()
+                f.close()
                 #for key in received:
                                         
                     #print(key)
