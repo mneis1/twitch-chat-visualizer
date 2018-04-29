@@ -27,6 +27,7 @@ class popText:
         #append words dictionary to the end of persistent list
 
         self.archiveMessages.extend(words)
+        del self.archiveMessages[100:]
         #TODO: scan list for time stamps greater than 1 min
         tokenizer = RegexpTokenizer(r'\w+')
 
