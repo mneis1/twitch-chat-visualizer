@@ -19,11 +19,15 @@ app.use(express.static(__dirname + "/"));
 
 // Routes
 app.get('/', function(req, res) {
-    res.status(200).send("Hello World");
+    res.status(200).send("s World");
 });
 
 app.get('/dataVis', function(req, res){
     res.status(200).sendFile(__dirname + "/index.html");
+})
+
+app.get('/twitch', function(req, res){
+    
 })
 
 var port = process.env.PORT || 8080;
