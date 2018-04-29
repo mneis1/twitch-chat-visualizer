@@ -27,7 +27,6 @@ class popText:
         #append words dictionary to the end of persistent list
 
         self.archiveMessages.extend(words)
-        del self.archiveMessages[100:]
         #TODO: scan list for time stamps greater than 1 min
         tokenizer = RegexpTokenizer(r'\w+')
 
@@ -101,10 +100,10 @@ if __name__ == "__main__":
 
     with TwitchChatStream(username=args.username,
                           oauth=args.oauth,
-                          verbose=False)as chatstream:
+                          verbose=True)as chatstream:
 
         #Name of streamer's twitch chat to join.
-        chatstream.join_channel("nickmercs")
+        chatstream.join_channel("ninja")
         x = popText()
 
         while True:
@@ -146,4 +145,5 @@ if __name__ == "__main__":
                 #print("received:", received)
                 #j = json.loads(re
             time.sleep(1)
+
 
