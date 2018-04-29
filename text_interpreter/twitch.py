@@ -25,6 +25,7 @@ class popText:
         #words = json_to_words(json_data)
         #TODO:append time stamp to the end of the dictionary entries
         #append words dictionary to the end of persistent list
+
         self.archiveMessages.extend(words)
         #TODO: scan list for time stamps greater than 1 min
         tokenizer = RegexpTokenizer(r'\w+')
@@ -65,10 +66,10 @@ class popText:
         pass
 
 
-x = popText()
-a = [{'username': 'spiderinqz', 'message': u'F', 'channel': '#overwatchleague'}, {'username': 'the_mathcat', 'message': u'100', 'channel': '#overwatchleague'}, {'username': 'pepsidude555', 'message': u'100', 'channel': '#overwatchleague'}, {'username': 'lavow', 'message': u'SPAM SMOrc the THIS SMOrc is BOSS SMOrc TO SMOrc MOURN SMOrc SHANGHAI\u2019S SMOrc loss', 'channel': '#overwatchleague'}, {'username': 'phaaedra', 'message': u'100', 'channel': '#overwatchleague'}, {'username': 'acalacaboo', 'message': u'F', 'channel': '#overwatchleague'}, {'username': 'danzilla132', 'message': u'100', 'channel': '#overwatchleague'}, {'username': 'irrelavantstreams', 'message': u'Hey i got 100 tokens', 'channel': '#overwatchleague'}, {'username': 'bazzlover69', 'message': u'LOL', 'channel': '#overwatchleague'}]
-c=x.collate_data(a)
-print(c)
+#x = popText()
+#a = [{'username': 'spiderinqz', 'message': u'F', 'channel': '#overwatchleague'}, {'username': 'the_mathcat', 'message': u'100', 'channel': '#overwatchleague'}, {'username': 'pepsidude555', 'message': u'100', 'channel': '#overwatchleague'}, {'username': 'lavow', 'message': u'SPAM SMOrc the THIS SMOrc is BOSS SMOrc TO SMOrc MOURN SMOrc SHANGHAI\u2019S SMOrc loss', 'channel': '#overwatchleague'}, {'username': 'phaaedra', 'message': u'100', 'channel': '#overwatchleague'}, {'username': 'acalacaboo', 'message': u'F', 'channel': '#overwatchleague'}, {'username': 'danzilla132', 'message': u'100', 'channel': '#overwatchleague'}, {'username': 'irrelavantstreams', 'message': u'Hey i got 100 tokens', 'channel': '#overwatchleague'}, {'username': 'bazzlover69', 'message': u'LOL', 'channel': '#overwatchleague'}]
+#c=x.collate_data(a)
+#print(c)
 
 
 #Reads data from a twitch server. Requires a username and oauth key.
